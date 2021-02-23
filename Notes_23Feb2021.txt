@@ -1,0 +1,917 @@
+There are 8 primitive data types in Java.
+These are the only data types. only value types in java.
+
+All other types like
+	String
+	Date
+		are not data types. They are types. They are reference types.
+
+what is meant by reference type?
+	a=b
+
+	here what is copied from what to what?
+	ans:	first tell me whether a and b are value types or reference types?
+		if a and b are primitive types, then the value of b is copied to a
+
+		if a and b are reference types, then the reference of b is copied to a
+
+	int a, b;
+	a=b;		now the value of b is copied to a
+
+	String a,b;
+	a=b;		now the reference of b is copied to a
+
+	that means, both a and b point to same memory location
+
+	Date d1, d2;
+	//assume that they are initialized with some data
+
+	d1=d2;		// ref is copied and hence both d1 and d2 are referring to same memory location
+
+
+	a==b			what is compared?
+
+		ans:	same qn? a and b are value types? or reference types?
+		if they are value types, their values are compared
+		if they are reference types, their references are compared
+
+Only 8 datatypes in java are value types. We cannot create user defined value types in java.
+	In C, C++ languages, even in C#, we can create user defined value types
+		using Structures. But in java, there is no structure types at all
+
+
+
+int a=20;
+float f=12.36f;
+
+can we store float value in int?		But we loose precision.
+
+a=(int)f;				//in bracket, what should i do? float or int? choose the target type
+
+here float is the source, int is the target. so while casting, we should specify the type of target
+
+Casting is allowed only inside same category of variable types.
+
+ie.,
+int to float and vice version
+int
+byte
+short
+long
+double
+float
+
+these above data types can be casted with each other
+
+String str="10";
+int i=(int)str;		//	THIS IS NOT ALLOWED Because, String belongs to different category
+
+
+Employee rama;
+ContractEmployee siva;
+
+
+siva=(ContractEmployee)rama;		//this is allowed ONLY if ContractEmployee inherits Employee
+
+Means, casting is allowed for reference types also
+
+Explicit Casting:-
+		int i=20;
+		long l=30;
+		l=i;				//i did not do casting explicitly. Here it happened implicitly
+		//the above is an example for implicit casting
+		System.out.println(l);
+		i=(int) l;				//not implicit			//narrowing is not implicit
+		//long is bigger than int. so it will not implicitly cast. 
+
+
+
+	float f=12;
+		int i=100;
+		f=i;			//this is nothing lost. so implicit casting
+		System.out.println(f);
+		i=(int) f;		//explicit
+
+=======================================================================
+Bus Game 
+ 
+In a village, N kids were playing the bus game.
+The rules for the bus game is as follows:
+Starting from the number 1,  the kids keep telling the consequtive numbers one by one.  A number 'X' will be given. The kid who gets a number which is divisible by X should say "Bus", instead of the original number , and the next kid will continue with the next number. This will go on in a circular manner. If any kid says incorrectly, that kid is out of the game.
+The kids are very clever. So they won't make any mistake while telling the numbers. They make mistake only while telling "Bus".
+
+Write a program to find the kid's number(index starting from 1) who went wrong.
+
+Input Format: 
+The first input is an integer, that corresponds to the number of kids, N.
+The second input is an integer, that corresponds to the number X.
+The following lines are strings, which correspond to the number said by the kids. The input stops only when any kid says incorrectly.
+  
+Output Format:
+Output is an integer value which represents the kid's number who went wrong.
+
+Sample Input:
+5
+4
+1
+2
+3
+Bus
+5
+6
+7 
+8 
+
+Sample Output:
+3 
+ 
+----------------------solution-----------------------
+import java.util.Scanner;
+
+public class BusGame {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int noOfKids=sc.nextInt();
+		int x=sc.nextInt();
+		String input="";
+		int kidNo=1;
+		while(true)
+		{
+			input=sc.next();
+//			System.out.println(""+kidNo+" says "+input);
+//			if(input=="Bus")		//wrong
+			if(!input.equals("Bus"))
+			{
+				int i=Integer.parseInt(input);		//convert String into int
+				if(i%x==0)
+				{
+//					System.out.println(kidNo+" did the mistake");
+					break;			//terminate the loop
+				}
+			}
+			kidNo++;		//this increment may cause it go beyond noOfKids
+			if(kidNo>noOfKids)
+				kidNo=1;
+		}
+		System.out.println(kidNo);
+	}
+
+}
+
+
+---------------------
+2 DIMENSIONAL ARRAY
+
+If an array is 3 X 3
+index will be
+	0,0
+	0,1
+	0,2
+
+	1,0
+	1,1
+	1,2
+
+	2,0
+	2,1
+	2,2
+
+how we write a for loop to access each and every element of 3X3 array?
+	for(int i=0;i<3;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+			i,j
+		}
+	}
+
+
+==================================================
+Mobile Lock Pattern solution:
+---------------------
+import java.util.Scanner;
+
+public class MobileLock {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int sideLength=sc.nextInt();
+		int noOfPoints=sc.nextInt();				//5
+		int [][]points=new int[noOfPoints][2];
+		for(int i=0;i<noOfPoints;i++)
+		{
+			int x=sc.nextInt();			//nextInt() delimiter can be space or new line
+			int y=sc.nextInt();
+			points[i][0]=x;
+			points[i][1]=y;	
+			
+		}
+		//algorithm starts here
+		//walk through the points
+		int x1, y1;
+		x1=points[0][0];
+		y1=points[0][1];
+		for(int i=1;i<noOfPoints;i++)			//1 to 4 that means 1 lesser than noOfPoints
+		{
+			//if noOfPoints is 5, then this for loop exectues 5 iterations
+			int x2=points[i][0];
+			int y2=points[i][1];
+			
+			//compare x1 with x2
+			//compare y1 with y2
+			int xDiff=Math.abs(x2-x1);
+			int yDiff=Math.abs(y2-y1);
+			if(xDiff>1 || yDiff>1)
+			{
+				System.out.println("Invalid");
+				return;
+			}
+			x1=x2;
+			y1=y2;
+		}
+		//find the coverage %		noOfPoint/(sideLength*sideLength)
+		float coverage=(float)noOfPoints/(sideLength*sideLength);					//0.75 comes as 0
+		coverage*=100;
+		if(coverage>75)
+			System.out.println("Excellent");
+		else if(coverage>50)
+			System.out.println("Good");
+		else if(coverage>25)
+			System.out.println("Average");
+		else
+			System.out.println("Poor");
+	}
+
+}
+
+----------------------------------------------------------
+
+break is used to terminate loop or switch
+	when using inside nested loop, "break" terminates only the current loop. Not parent loop.
+return is used to exit the current method. Currently in main method, so it stops program exectuion
+System.exit(0) is used to stop core java program execution.
+
+
+
+
+2,2
+
+	X,Y
+
+	X-1
+	X+0
+	X+1
+
+	ALL COMBINATION OF THIS WITH
+	Y-1
+	Y+0
+	Y+1
+
+	
+----------------------------------Square and Tower solution-----------------
+import java.util.Scanner;
+
+public class SquareAndTower {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int cityLength=sc.nextInt();
+		int noOfTowers=sc.nextInt();
+		int towers[][]=new int[noOfTowers][2];
+		int city[][]=new int[cityLength][cityLength];			//by default, every element is 0
+		for(int i=0;i<noOfTowers;i++)
+		{
+			//no need for loop that iterates 2 times
+			int x=sc.nextInt();
+			int y=sc.nextInt();
+			towers[i][0]=x;
+			towers[i][1]=y;
+		}
+		//algorithm starts here
+		//update the locations where towers are present. and their adjacent locations also by "1"
+		for(int i=0;i<noOfTowers;i++)
+		{
+			int x=towers[i][0];
+			int y=towers[i][1];
+			
+			//update city [x][y] as 1			also their adjacent locations too
+			city[x][y]=1;
+			
+			//for adjacent locations
+			//				x-1		x+1		when x-1, do all combinations of y-1	y+1 also		do it in loop
+//			System.out.println("For the tower at "+x+":"+y);
+			for(int a=-1;a<=1;a++)
+			{
+				//		a becomes 	-1, 0, +1
+				for(int b=-1;b<=1;b++)
+				{
+					//		b becomes 	-1, 0, +1
+					
+					int newX=x+a;
+					int newY=y+b;
+//					System.out.printf("x=%d and y=%d\n",newX,newY);
+					if(newX>=0 && newY>=0 && newX<cityLength && newY<cityLength)
+						city[newX][newY]=1;
+				}
+//				System.out.println();
+			}
+			
+		}
+		//lets instead of display the city matrix, lets count the 0s
+		int zerosCount=0;
+		for(int i=0;i<cityLength;i++)
+		{
+			for(int j=0;j<cityLength;j++)
+			{
+				if(city[i][j]==0)
+					zerosCount++;
+			}
+		}
+		if(zerosCount>0)
+		{
+			System.out.println("No");
+			System.out.println(zerosCount);
+		}else
+			System.out.println("Yes");
+	}
+
+}
+
+---------------------------------------------------------------------------
+Working with Packages:
+----------------------
+what is a package? in java?
+	Folder is to Files
+	Package is to class
+
+Like a folder contains lot of files and sub folders, 
+A package in java, can contain classes and sub packages.
+
+In java, every package is a folder
+
+when compiling a java program that contains package, 
+	javac -d . Student.java
+
+here, 
+-d means create directory
+. means current location. We want the package folder to be created in the current location.
+
+sometimes, we want the class files to be created in "bin" folder
+	javac -d bin Student.java
+
+
+every class belongs to a package. If no package is specified, (in eclipse), then it belongs to default package.
+
+What is the need for package?
+	we can define the access permissions based on the package.
+	if we declare a variable,
+	if we create a method,
+		without "public", "private" or any access specifier, then that member becomes accessible only within the current package.
+	
+	when a variable or method is declared without any access specifier, then it is package scope. Only accessible within the current package.
+
+
+	public	-	accessible within same package or from other package also
+	protected-	accessible within same package or from other package if it is derived class. Sub classes from any package can access protected members
+	default	-	(no access specifier)	accessible only within the same package
+	private	-	accessible only within the same class
+
+
+Within same package, except private members of a class, all other members are accessible
+
+
+------------------------
+What is a class?
+	WHy do we need class?
+	
+
+	what we have done in c language
+
+		in c language we can see
+			VARIABLE
+			FUNCTIONS
+
+	a large c project looks little complex. unmanagable with global variables
+	which portion of code serves which purpose
+
+	i know, if i am the developer, i know that these functions and these variables
+	are for Student module
+	and some other set of functions and variable for Teacher module
+
+	
+	So, imagine if we box those circuits and components sorry
+		imagine if we wrap, those variables and functions into a unit called Class
+
+What is a class?
+	A class wraps, data members and methods into an unit
+
+	right from a simple adding 2 numbers program
+	to rocket science, 2 things are common
+
+	algorithm
+	data structure	
+
+	a+b			a and b are data structures. + is the algorithm
+
+	A class wraps, both of them into an unit
+
+	That boxing/ wrapping/ covering is called as Encapsulation
+
+	what i am allowed to do in that box? i have some button to
+		switch on/off
+		increase /decrease volume
+
+	those buttons are called as public methods
+
+	there are lot of circuits, inside are called as private members
+	
+	inside the circuit, they are private.
+	Inside the box, they are default (package scope)
+	box can be a package. and each component inside the box are classes
+
+	So it is always advisable to keep the classes inside the package
+
+Class wraps, the data members and methods
+
+	A class is an user defined type. 
+	A class is a reference type
+
+	For 8 primitive data types, 
+		there is a corresponding Wrapper class
+
+imagine
+	int  is a data type
+i can create a class like:
+
+
+class Integer
+{
+	int i;
+}
+
+
+can we call that Integer class wraps a int variable inside. So that i have some space to write functions related to int
+
+for example, to convert String into int, i need a funtion. 
+Integer.parseInt(str);		//
+
+why cant we do 
+	int i;
+	i.something()			no, i. something is never allowed 
+	because, i is a primitive type. if you go and see the memory location, there is only a value present inside, nothing else is there
+
+	
+
+So a primitive cannot contain member functions inside
+
+So i want to know what is the maximu value allowed in a int
+	int.max_value not possible
+
+Integer.MAX_VALUE			(wHY full capital?????	In java constants are in full caps)
+
+in c lang
+	const int tenthMark=20;			//this is constant in c language
+
+in java lang
+	final int TENTH_MARK=20;			//notice I is in full caps
+		Why underscore, because, all are in caps, i cannot distinguish 2 words in this name
+
+	final is used to create constants			Final variable looks like TRUE LIE
+
+Guideliness while creating class:
+1) A class name must begin in Capital letter. Each next word, first letter must be in capital letter
+2) A class name must be a noun
+		
+	sigup and signin
+		these are processes done by an user
+
+so the class name must be User. Not Signin or Signup
+
+In any business, there are stackholder performing some process or operations. Operations must be methods. Who perform the operation must be Class
+3) A class should contain data members which are not PUBLIC
+	they can be private, protected or default (no access specifier)
+4) Class name must be the file name
+5) every class in separate file
+
+-----------------------------------
+2 for loops
+	find all possible combination of multiplication
+35 30 7 6 5
+35 30 7 6 5
+
+take first number 35
+and try to multiply with all the numbers in second set
+
+this is done by nested for loop
+
+find if that product is present in the array or not
+if yes, keep a maxProduct variable. that should be updated conditionally
+
+
+45 35 -7 -15 6 2 3
+
+45 is greatest number but not choosen as answer
+
+------------------------------------------------------------------------------
+package college;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MaximumProduct {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int arr[]=new int[n];
+		for(int i=0;i<n;i++)
+		{
+			arr[i]=sc.nextInt();			
+		}
+
+		//loop the array take current element and multiply with all elements in the array
+		int maxProduct=-1;
+		for(int i=0;i<n;i++)
+		{
+			for(int j=i+1;j<n;j++)
+			{
+
+				//					System.out.printf("i=%d and j=%d\n",i,j);
+				int product=arr[i]*arr[j];
+				//check if product is found in the array list???
+				for(int k=0;k<n;k++)
+				{
+					if(product==arr[k])
+					{
+						//it is found... but is this the maxProduct?
+						if(product>maxProduct)
+							maxProduct=product;
+//						System.out.println("Max product is "+maxProduct);
+					}
+				}
+
+
+			}
+		}
+		System.out.println(maxProduct);
+	}
+
+}
+---------------
+if 
+Lets continue to follow the guidelines to create a Class:
+
+
+The class name should be a noun.
+
+Lets take an example Employee is a noun.
+
+the data members can not be public. They can be any access specifier other than public
+	private
+	protected
+	default (no access specifier)
+
+
+
+Now,
+If the data members are private, then how others can access them?
+
+If the data member is public, it can be accessible. But there is a risk.
+Any value can be stored in a public variable. 
+
+
+If a data member of a class is to be made accessible, then
+	create getter and setter methods for that data member
+
+A class will never be private unless it is an inner class.
+
+class A
+{
+	private class B		//this is inner class				B is available only inside A
+	{
+	
+	}
+}
+
+
+
+
+
+if we make a variable as public, then we are allowing unconditionally
+
+public int age;
+
+age=2000;			where is the space to validate the input???
+
+BUT
+
+private int age;
+
+public void setAge(int age)
+{
+	//here, i can validate the data and allow or reject
+	if(age<0 || age>100)
+		throw new NumberFormatException("Age cannot be less than 0 or greater than 100");	
+	this.age=age;
+}
+
+we need space where we can write validation code. So setter is used to check if the arg is correct and allow or reject
+
+Then why do we need getter???
+	Getter can transform the output
+
+the purpose of getters and setters
+
+
+
+new operator 
+	to create object		new Scanner(System.in);
+	to create array			new int[10];
+
+
+if System.in is an argument then where it is passed to?	it is passed to constructor.
+
+Like that,
+
+Can I create an object of Student like:
+	Student rama=new Student(11, "Rama","1999-01-01",9);
+
+to be able to create an object like above, we need to create Constructor with argument.
+
+A class always have a default constructor until we do not create any constructor.
+IF we create a constructor, then we must also create a no arg constructor. Because, the compiler will not create a no arg constructor
+
+
+why we need a constructor without argument?
+
+Employee emp=new Employee();			//joins the org and later the documents are submitted
+
+whenever he submits documents,
+emp.setGraduationDate(...);
+empl.setCollegeName(...);
+
+so there are 2 approaches while creating object
+
+1) create an object using constructor with arguments
+2) create an object using 0 arg constructor and later supply the values using setter methods
+
+
+Lets see how to create constructors in eclipse
+
+	right click -> source -> generate constructor using fields
+
+
+
+Suppose if i create 2 objects of 1 class.
+
+User is the class
+	User rama=new User();
+	User siva=new User();
+
+	how will you compare if both users are same or different?	
+	Suppose, if name of the users are same, then both are same objects.
+
+	String str1="hello";
+	String str2="hello";	
+
+how do we check if both the strings are equal or not?
+
+	str1.equals(str2);				
+		we do not do 		str1==str2	this will compare their references. We want to compare by their values. so use "equals" method.
+
+Now, the same way we want to compare User objects
+
+	User rama=new User();
+	User siva=new User();
+
+	rama.equals(siva);			should return true, if their names are same
+
+	How to do that?????	this is possible only if User class has an equals() method
+
+Whenever we create a class, it is derived from Object class.
+Object is the super class for any class we create.
+
+There are some methods defined in Object class. Hence they are available in any class.
+But the functionality can be customized according to our requirement using overriding those methods.
+
+some methods of Object class are:
+	toString()
+	equals()
+	hashcode()
+
+
+The user input for user object is
+Oliver,oliver@gmail.com,7856124589,SanFrancisco
+
+this is a csv	(what is csv?)
+	comma separated value
+
+how to split this string by comma?	
+	String class provides split method.
+	if we split this string by comma, we get an array of Strings
+
+
+a.equals(b);			a and b are User types. means same type
+
+Oliver,oliver@gmail.com,7856124589,SanFrancisco
+Harry,harry@gmail.com,9856231478,NewYork
+
+
+Harry,harry@gmail.com,9856231478,NewYork
+haRRy,harry@gmail.com,9856231478 ,NewYork
+
+
+
+Grace,9898798652,grace@gmail.com,27/02/1987
+Jane,9765659820,jane@gmail.com,13/03/1993
+
+
+Wayne,9787621230,wayne@gmail.com,15/09/1988
+waYNe,9787621230,wayne@gmail.com,15/09/1988
+
+
+
+
+-----------------------
+What is a Date?
+	in java.util package, there is a class "Date"
+
+	Date dt=new Date();			//the constructor fills today's date in this object
+
+Starting from 1900 year, every millisecond, the date is a long data type variable
+
+when it was 0?			it was 0 on 1900	year
+
+
+1614077968429
+1614077976118
+1614078006440
+
+76-68=8			8 seconds has run away
+
+8006
+7976-
+----
+0030			30 seconds has run away
+
+
+
+
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MMM-yyyy");
+		System.out.println(sdf.format(dt1));
+
+
+Accept a date as input in dd/MM/yyyy format and display the week day of that date.
+
+in simple date format, if the format is
+dd-MMM-yyyy			23-Feb-2021
+EEEE				Tuesday
+EEE				Tue
+
+mm				37				(minutes)
+hh:mm a				04:39 PM
+
+
+I want to retrieve month from the date object
+
+How will you check if 2 dates are equal?
+	dt1, dt2
+	
+	dt1.equals(dt2)			//returns true if they are equal
+
+How will you check if 2 Strings are equal?
+	str1.equals(str2);
+
+Integer, Float, Double are all wrapper classes
+
+what are wrapper classes?
+	Corresponding to each primitive data type, there is a wrapper class.
+
+byte		Byte
+short		Short
+int		Integer
+long		Long
+float		Float
+double		Double
+char		Character
+boolean		Boolean
+
+Why we need wrapper classes? We need some tasks related to primitive types. But primitive variables hold only the value inside. so they do not have member methods.
+
+Let us take char as an example.
+
+if user input is a char. how to find if the char is a number or not? 
+
+
+In scanner, there is no method called sc.nextChar();			//there is no such method
+to get String input, we have 
+		sc.next()
+		sc.nextLine()
+
+but how to get char as input?
+
+Character is a wrapper class that provides methods related to char
+
+we cannot fit those methods inside a primitive
+
+int a,b;
+to check equality
+
+a==b
+
+Integer a, b;
+
+correct way to compare is 
+a.equals(b)
+
+to check if a is greater than b or not
+
+a.compareTo(b)					this is equal to 		a-b
+
+a.compareTo(b)	returns 0	if equal		and postive is a is greater and else negative
+
+
+
+
+In java versions before 1.5
+
+
+		int i=20;
+		Integer a=new Integer(i);					
+		i=a.intValue();							
+
+In java versions after 1.4
+		int i=20;
+		Integer a=i;					//this is auto-boxing		
+		i=a;							//this is auto unboxing
+		
+
+-----------------------------------------------------
+User will enter 2 input strings
+ex:
+	tea
+	eat
+
+output:
+	the given strings are anagrams
+
+ex:
+	team
+	meet
+
+output:
+	the given strings are not anagrams
+
+Hint:
+	You can convert a String into char array		str.toCharArray();
+	array can be sorted using 				Arrays.sort(arr);
+	char array can again be converted back to string	String str3=new String(arr);
+
+
+--------------------------------------------------------
+Get the following inputs and display them 
+int i;			//123			nextInt()
+float f;		//12.36			nextFloat()
+String name;		//Rama Krishna		nextLine()		but only 1 word is taken
+int age;		//22			nextInt()
+
+just display them as output
+
+Note name is "Rama Krishna" there is a space in between
+
+what is the problem?
+
+if sc.nextLine() is used after a numeric input, the "new line" char is received by sc.nextLine()
+
+There are 2 solutions for this:
+	i) check if received input is "" and get input again
+	ii) Use 2 scanners. 1 for nextLine() alone. 
+			    1 for all other inputs
+
+123
+12.36
+Rama Krishna
+22
+
+
+
+-----------
+		int i=0;
+		float f=0;
+		String str="";
+		int age=0;
+		Scanner sc=new Scanner(System.in);
+		i=sc.nextInt();
+		f=sc.nextFloat();
+		str=sc.nextLine();			//whenever nextLine() comes after numeric input, 
+		if(str.equals(""))
+			str=sc.nextLine();
+		age=sc.nextInt();
+		
+		System.out.println(i);
+		System.out.println(f);
+		System.out.println(str);
+		System.out.println(age);
+		
+-----------------
